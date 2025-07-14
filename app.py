@@ -12,15 +12,15 @@ st.title("🚖 NYC Taxi Trip Duration Predictor")
 st.markdown("This app predicts trip duration (in seconds) for NYC Green Taxi rides using 2019 data.")
 
 # === 1. Load dataset from file ===
-FILE_PATH = "train.csv"
+uploaded_file = st.file_uploader("📁 Upload NYC Taxi CSV file", type=["csv"])
 
-if not os.path.exists(FILE_PATH):
-    st.error(f"File '{FILE_PATH}' not found. Please ensure it's in the working directory.")
+if uploaded_file is not None:
+    sample_df = pd.read_csv(uploaded_file, nrows=5)
+else:
+    st.warning("Please upload a CSV file to proceed.")
     st.stop()
 
-# Check which columns exist
 
-sample_df = pd.read_csv(FILE_PATH, nrows=5)
 print(sample_df.columns.tolist())
 expected_columns = ['pickup_datetime', 'dropoff_datetime']
 missing_cols = [col for col in expected_columns if col not in sample_df.columns]
